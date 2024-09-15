@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation{% endblock %}
+
+{% block body %}
+    <h1>Liste des réservation pour la foire à tout de la FCPE</h1>
+
+    <table class="table">
+        <thead>
+            <tr>               
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Mail</th>
+                <th>Téléphone</th>
+                <th>Date de contact</th>
+                <th>Date d'envoi des doc</th>
+                <th>Commentaire</th>
+                <th>Nombres de mètres</th>
+                <th>Portant ? </th>
+                <th>FCPE ?</th>
+                <th>Prix emplacement</th>
+                <th>Nb Merguez</th>
+                <th>Nb Saucisse</th>
+                <th>Nb Dinde</th>
+                <th>Nb Fromage</th>
+                <th>Nb Jambon</th>
+                <th>Prix repas</th>
+                <th>Assurance Recu ?</th>
+                <th>Carte Id Reçu ?</th>
+                <th>Inscription validée le</th>
+                <th>Payé ?</th>
+                <th>Moyen de Paiement</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                
+                <td>{{ reservation.Name }}</td>
+                <td>{{ reservation.firstname }}</td>
+                <td>{{ reservation.mail }}</td>
+                <td>{{ reservation.phoneNumber }}</td>
+                <td>{{ reservation.contactDate ? reservation.contactDate|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation.sendingDocDate ? reservation.sendingDocDate|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation.comments }}</td>
+                <td>{{ reservation.nbMetres }}</td>
+                <td>{{ reservation.hasPortant ? 'Oui' : 'Non' }}</td>
+                <td>{{ reservation.FCPEMember ? 'Oui' : 'Non' }}</td>
+                <td>{{ reservation.priceMetrage }}</td>
+                <td>{{ reservation.nbMerguez }}</td>
+                <td>{{ reservation.nbSaucisse }}</td>
+                <td>{{ reservation.nbPaniniDinde }}</td>
+                <td>{{ reservation.nbPaniniFromage }}</td>
+                <td>{{ reservation.nbPaniniJambon }}</td>
+                <td>{{ reservation.priceFood }}</td>
+                <td>{{ reservation.assuranceRecu ? 'Oui' : 'Non' }}</td>
+                <td>{{ reservation.carteIdRecu ? 'Oui' : 'Non' }}</td>
+                <td>{{ reservation.inscriptionCheckedDate ? reservation.inscriptionCheckedDate|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation.Payed ? 'Oui' : 'Non' }}</td>
+                <td>{{ reservation.moyenPaiement }}</td>
+                <td>
+                    <a href="{{ path('app_reservation_show', {'id': reservation.id}) }}">show</a>
+                    <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="24">Aucune réservation pour le moment</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reservation_new') }}">Create new</a>
+{% endblock %}
