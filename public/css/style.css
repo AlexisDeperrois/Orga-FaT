@@ -1,0 +1,59 @@
+html{
+    background-color: rgb(253, 241, 224);
+}
+
+header{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+article{
+    
+    padding: 5px 10px;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+.FCPEMember{
+    background-color: rgb(248, 248, 90);
+}
+
+#titles{
+    background-color: rgb(113, 223, 155);
+}
+.div-data{
+    display: inline-block;
+    text-align: center;
+    padding: 2px;
+    font-size: 12px;
+}
+
+.small{
+    width: 40px;
+}
+
+.medium{
+    width: 90px;
+}
+
+.large{
+    width: 220px;
+}
+
+.HasPortant{
+    font-weight: bold;
+    color: rgb(252, 84, 84);
+}
+
+section{
+    margin-bottom: 20px;
+}
+
+
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}

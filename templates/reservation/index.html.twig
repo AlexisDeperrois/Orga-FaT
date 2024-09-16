@@ -3,74 +3,109 @@
 {% block title %}Reservation{% endblock %}
 
 {% block body %}
-    <h1>Liste des réservation pour la foire à tout de la FCPE</h1>
+    <header>
+        <h1>Liste des réservation pour la foire à tout de la FCPE</h1>
+        <a href="{{ path('app_reservation_new') }}">Ajouter une reservation</a>
+    </header>
+    
 
-    <table class="table">
-        <thead>
-            <tr>               
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Mail</th>
-                <th>Téléphone</th>
-                <th>Date de contact</th>
-                <th>Date d'envoi des doc</th>
-                <th>Commentaire</th>
-                <th>Nombres de mètres</th>
-                <th>Portant ? </th>
-                <th>FCPE ?</th>
-                <th>Prix emplacement</th>
-                <th>Nb Merguez</th>
-                <th>Nb Saucisse</th>
-                <th>Nb Dinde</th>
-                <th>Nb Fromage</th>
-                <th>Nb Jambon</th>
-                <th>Prix repas</th>
-                <th>Assurance Recu ?</th>
-                <th>Carte Id Reçu ?</th>
-                <th>Inscription validée le</th>
-                <th>Payé ?</th>
-                <th>Moyen de Paiement</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <section class ="reservation-list">
+
+        <article id="titles">
+            <div class ="div-data small"></div>  
+            <div class ="div-data medium">Nom</br>Prénom</div>
+            <div class ="div-data large">Mail</div>
+            <div class ="div-data medium">Téléphone</div>
+            <div class ="div-data medium">Date de contact</div>
+            <div class ="div-data medium">Date d'envoi des doc</div>
+            <div class ="div-data large">Commentaire</div>
+            <div class ="div-data small">Portant ? </div>
+            <div class ="div-data small">FCPE ?</div>
+            <div class ="div-data small">Nb de mètres</div>
+            <div class ="div-data small">Prix emplt</div>
+            <div class ="div-data small">Nb </br>MF</div>
+            <div class ="div-data small">Nb </br>SF</div>
+            <div class ="div-data small">Nb </br>PD</div>
+            <div class ="div-data small">Nb</br> PF</div>
+            <div class ="div-data small">Nb </br>PJ</div>
+            <div class ="div-data small">Prix repas</div>
+            <div class ="div-data small">Prix total</div>
+            
+            <div class ="div-data small">Ass reçue ?</div>
+            <div class ="div-data small">Carte Id reçue ?</div>
+            <div class ="div-data medium">Inscription validée le</div>
+            <div class ="div-data small ">Payé ?</div>
+            <div class ="div-data medium">Moyen de Paiement</div>
+                              
+        </article>
+        {% set nbMetres = 0 %}
+        {% set nbMF = 0 %}
+        {% set nbSF = 0 %}
+        {% set nbPD = 0 %}
+        {% set nbPF = 0 %}
+        {% set nbPJ = 0 %}
+        {% set prixTotal = 0 %}
+
         {% for reservation in reservations %}
-            <tr>
-                
-                <td>{{ reservation.Name }}</td>
-                <td>{{ reservation.firstname }}</td>
-                <td>{{ reservation.mail }}</td>
-                <td>{{ reservation.phoneNumber }}</td>
-                <td>{{ reservation.contactDate ? reservation.contactDate|date('Y-m-d') : '' }}</td>
-                <td>{{ reservation.sendingDocDate ? reservation.sendingDocDate|date('Y-m-d') : '' }}</td>
-                <td>{{ reservation.comments }}</td>
-                <td>{{ reservation.nbMetres }}</td>
-                <td>{{ reservation.hasPortant ? 'Oui' : 'Non' }}</td>
-                <td>{{ reservation.FCPEMember ? 'Oui' : 'Non' }}</td>
-                <td>{{ reservation.priceMetrage }}</td>
-                <td>{{ reservation.nbMerguez }}</td>
-                <td>{{ reservation.nbSaucisse }}</td>
-                <td>{{ reservation.nbPaniniDinde }}</td>
-                <td>{{ reservation.nbPaniniFromage }}</td>
-                <td>{{ reservation.nbPaniniJambon }}</td>
-                <td>{{ reservation.priceFood }}</td>
-                <td>{{ reservation.assuranceRecu ? 'Oui' : 'Non' }}</td>
-                <td>{{ reservation.carteIdRecu ? 'Oui' : 'Non' }}</td>
-                <td>{{ reservation.inscriptionCheckedDate ? reservation.inscriptionCheckedDate|date('Y-m-d') : '' }}</td>
-                <td>{{ reservation.Payed ? 'Oui' : 'Non' }}</td>
-                <td>{{ reservation.moyenPaiement }}</td>
-                <td>
-                    <a href="{{ path('app_reservation_show', {'id': reservation.id}) }}">show</a>
-                    <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="24">Aucune réservation pour le moment</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_reservation_new') }}">Create new</a>
+
+            <article class="reservation {{ reservation.FCPEMember ? 'FCPEMember' : null }}">
+
+                <div class ="div-data small">
+                    <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">Modifier</a>
+                </div>
+                <div class ="div-data medium">{{ reservation.Name }} </br> {{ reservation.firstname }} </div>
+                <div class ="div-data large">{{ reservation.mail }}</div>
+                <div class ="div-data medium">{{ reservation.phoneNumber }}</div>
+                <div class ="div-data medium">{{ reservation.contactdate ? reservation.contactdate|date('d-m-Y') : '' }}</div>
+                <div class ="div-data medium">{{ reservation.sendingDocDate ? reservation.sendingDocDate|date('d-m-Y') : '' }}</div>
+                <div class ="div-data large">{{ reservation.comments }}</div>                
+                <div class ="div-data small {{ reservation.hasPortant ? 'HasPortant' : null }}">{{ reservation.hasPortant ? 'Oui' : 'Non' }}</div>
+                <div class ="div-data small">{{ reservation.FCPEMember ? 'Oui' : 'Non' }}</div>
+                <div class ="div-data small">{{ reservation.nbMetres }}</div>
+                {% set nbMetres = nbMetres + reservation.nbMetres %}
+                <div class ="div-data small">{{ reservation.priceMetrage }}</div>
+                <div class ="div-data small">{{ reservation.nbMerguez }}</div>
+                {% set nbMF = nbMF + reservation.nbMerguez %}
+                <div class ="div-data small">{{ reservation.nbSaucisse }}</div>
+                {% set nbSF = nbSF + reservation.nbSaucisse %}
+                <div class ="div-data small">{{ reservation.nbPaniniDinde }}</div>
+                {% set nbPD = nbPD + reservation.nbPaniniDinde %}
+                <div class ="div-data small">{{ reservation.nbPaniniFromage }}</div>
+                {% set nbPF = nbPF + reservation.nbPaniniFromage %}
+                <div class ="div-data small">{{ reservation.nbPaniniJambon }}</div>
+                {% set nbPJ = nbPJ + reservation.nbPaniniJambon %}
+                <div class ="div-data small">{{ reservation.priceFood }}</div>
+                <div class ="div-data small">{{ reservation.priceFood + reservation.priceMetrage }}</div> 
+                {% set prixTotal = prixTotal + reservation.priceFood + reservation.priceMetrage %}  
+                <div class ="div-data small">{{ reservation.assuranceRecu ? 'Oui' : 'Non' }}</div>
+                <div class ="div-data small">{{ reservation.carteIdRecu ? 'Oui' : 'Non' }}</div>
+                <div class ="div-data medium">{{ reservation.inscriptionCheckedDate ? reservation.inscriptionCheckedDate|date('Y-m-d') : '' }}</div>
+                             
+                <div class ="div-data small">{{ reservation.Payed ? 'Oui' : 'Non' }}</div>
+                <div class ="div-data medium">{{ reservation.moyenPaiement }}</div>
+                
+            </article>
+        {% else %}
+            <article>
+                <p>Aucune réservation pour le moment</p>
+            </article>
+        {% endfor %}
+
+        <p>Total mètres : {{nbMetres}}</p>
+
+        <p>Total Merguez : {{nbMF}}</p>
+
+        <p>Total Saucisse : {{nbSF}}</p>
+
+        <p>Total Panini Dinde : {{nbPD}}</p>
+
+        <p>Total Panini Fromage : {{nbMF}}</p>
+        
+        <p>Total Panini Jambon : {{nbPJ}}</p>
+
+        <h1> TOTAL POGNON ! MOULAH ! BIFF ! BLE ! OSEILLE ! => {{prixTotal}} €</h1>
+
+
+    </section>    
 {% endblock %}
