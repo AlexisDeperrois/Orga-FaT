@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ReservationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -79,6 +81,17 @@ class Reservation
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $moyenPaiement = null;
+
+    /**
+     * @var Collection<int, Emplacement>
+     */
+    #[ORM\OneToMany(targetEntity: Emplacement::class, mappedBy: 'reservation')]
+    private Collection $emplacement;
+
+    public function __construct()
+    {
+        $this->emplacement = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -335,6 +348,36 @@ class Reservation
     public function setMoyenPaiement(?string $moyenPaiement): static
     {
         $this->moyenPaiement = $moyenPaiement;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Emplacement>
+     */
+    public function getEmplacement(): Collection
+    {
+        return $this->emplacement;
+    }
+
+    public function addEmplacement(Emplacement $emplacement): static
+    {
+        if (!$this->emplacement->contains($emplacement)) {
+            $this->emplacement->add($emplacement);
+            $emplacement->setReservation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmplacement(Emplacement $emplacement): static
+    {
+        if ($this->emplacement->removeElement($emplacement)) {
+            // set the owning side to null (unless already changed)
+            if ($emplacement->getReservation() === $this) {
+                $emplacement->setReservation(null);
+            }
+        }
 
         return $this;
     }

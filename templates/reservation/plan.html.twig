@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Plan{% endblock %}
+
+{% block body %}
+
+    <header>
+        <h1>Plan de la FaT FCPE</h1>
+    </header>
+
+    <main id="plan-main">
+        <section id="plan-actions">
+            <a href="{{ path('app_table_new') }}">Ajouter une table</a>
+            <a href="{{ path('app_table_delete') }}">Retirer une table</a>
+        </section>  
+        <section id = "plan-waitingForPlace">
+            {% for reservation in reservationsWithoutPlace %}
+            <div class="plan-reservation {{ reservation.FCPEMember ? 'FCPEMember' : null }} {{ reservation.hasPortant ? 'HasPortant' : null }}"
+                 draggable="true"
+                 style="width: {{reservation.nbMetres * 77 - 2 }}px">{{reservation.name}}</br>
+                {{reservation.firstname}}</div>
+                
+            {% endfor %}
+ 
+
+
+        </section>  
+
+        <section id = "plan-map">
+
+            {% for table in tables %}
+                <article class = "tables"> 
+                    <div class = "table-names"> {{table.letter}}</div>
+                    <div class = "table-actions">
+                        <a href="{{ path('app_table_add_emplacements', {'id': table.id}) }}">+</a>
+                        <a href="{{ path('app_table_remove_emplacements', {'id': table.id}) }}">-</a>
+                    </div>
+                    {% for emplacement in table.emplacements %}
+                        <div class="table-emplacements">{{emplacement.number}}</div>                        
+                    {% endfor %}
+
+                </article>
+            {% else %}
+                <article> Vous n'avez créé aucune table pour l'instant</article>
+            {% endfor %}
+
+
+        </section>
+
+
+    </main>
+    
+
+      
+{% endblock %}

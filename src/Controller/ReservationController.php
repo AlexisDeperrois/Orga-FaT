@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
+use App\Repository\TableRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,33 @@ final class ReservationController extends AbstractController
     {
         return $this->render('reservation/index.html.twig', [
             'reservations' => $reservationRepository->findBy([],['Name'=> 'ASC','firstname'=>'ASC']),
+        ]);
+    }
+
+
+    #[Route('/plan', name: 'app_reservation_plan', methods: ['GET'])]
+    public function plan(ReservationRepository $reservationRepository, TableRepository $tableRepository): Response
+    {   
+        $reservationWithPlace =[];
+        $reservationWithoutPlace = [];
+
+        $reservations = $reservationRepository->findAll();
+        foreach($reservations as $reservation){
+            if($reservation->getInscriptionCheckedDate()){
+                if(count($reservation->getEmplacement())< 0 ){
+                    $reservationWithPlace[] = $reservation;
+                }else{
+                    $reservationWithoutPlace[] = $reservation;
+                }  
+            }
+                 
+        }
+
+        return $this->render('reservation/plan.html.twig', [
+            // 'reservationWithPlace' => $reservationRepository->findBy(['emplacement'=>!null],['Name'=>'ASC', 'firstname'=>'ASC']),
+            'tables'=>$tableRepository->findAll(),
+            'reservationsWithoutPlace' => $reservationWithoutPlace,
+            'reservationsWithPlace' => $reservationWithPlace,
         ]);
     }
 

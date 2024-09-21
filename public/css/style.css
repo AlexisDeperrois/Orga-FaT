@@ -2,6 +2,16 @@ html{
     background-color: rgb(253, 241, 224);
 }
 
+nav{
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+a{
+    text-decoration: none ;
+}
+
 header{
     display: flex;
     justify-content: space-evenly;
@@ -56,4 +66,60 @@ form{
     gap: 10px;
     align-items: center;
     justify-content: center;
+}
+
+
+
+
+
+
+/*                        PLAN                                 */
+
+#plan-actions{
+    width: 100%;
+    padding: 0 30px;
+    display: flex;
+    gap: 30px;
+}
+
+#plan-waitingForPlace{ 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
+
+}
+
+#plan-map{
+  
+}
+
+.plan-reservation{
+    text-align: center;
+    font-size: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.tables{
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.table-actions{
+    width: 60px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.table-names{
+    width: 15px;
+
+}
+
+.table-emplacements{
+    width: 75px;
+    background-color: rgb(1, 184, 184);
+    border: 1px solid black;
+    text-align: center;
 }
